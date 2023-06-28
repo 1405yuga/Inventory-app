@@ -22,4 +22,7 @@ interface ItemDao {
 
     @Query("SELECT * FROM item WHERE id =:id")
     fun getItem(id: String) : Flow<Item>
+
+    @Query("SELECT * FROM item")
+    fun getItems() : Flow<List<Item>>
 }
