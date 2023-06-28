@@ -2,9 +2,19 @@ package com.example.inventory.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.example.inventory.data.Item
 import com.example.inventory.data.ItemDao
+import kotlinx.coroutines.launch
 
 class InventoryViewModel(private val itemDao: ItemDao ) : ViewModel() {
+
+    //insert item in db
+    private fun addItem(item: Item){
+        viewModelScope.launch {
+            itemDao.insertItem(item)
+        }
+    }
 
 }
 
