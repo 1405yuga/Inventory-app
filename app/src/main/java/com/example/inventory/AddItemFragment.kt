@@ -59,9 +59,17 @@ class AddItemFragment : Fragment() {
         return binding.root
     }
 
+    private fun isEntryValid(): Boolean {
+        return viewModel.isEntryValid(
+            binding.itemName.text.toString(),
+            binding.itemPrice.text.toString(),
+            binding.itemCount.text.toString()
+        )
+    }
     /**
      * Called before fragment is destroyed.
      */
+
     override fun onDestroyView() {
         super.onDestroyView()
         // Hide keyboard.
