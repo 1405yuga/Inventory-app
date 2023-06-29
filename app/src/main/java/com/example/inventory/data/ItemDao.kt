@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface ItemDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertItem(item: Item) : Item
+    suspend fun insertItem(item: Item)
 
     @Update
     suspend fun updateItem(item :Item)
