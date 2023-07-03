@@ -26,6 +26,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.inventory.data.Item
+import com.example.inventory.data.getFormattedPrice
 import com.example.inventory.databinding.FragmentItemDetailBinding
 import com.example.inventory.viewmodel.InventoryViewModel
 import com.example.inventory.viewmodel.InventoryViewModelFactory
@@ -52,6 +53,14 @@ class ItemDetailFragment : Fragment() {
     ): View? {
         _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    private fun bind(item : Item){
+        binding.apply {
+            itemName.text = item.itemName
+            itemPrice.text = item.getFormattedPrice()
+            itemCount.text = item.quantityInStock.toString()
+        }
     }
 
     /**
