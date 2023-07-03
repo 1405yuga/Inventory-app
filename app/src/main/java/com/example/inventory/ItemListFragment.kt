@@ -56,6 +56,11 @@ class ItemListFragment : Fragment() {
 
         }
         binding.recyclerView.adapter = adapater
+        viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
+            items.let {
+                adapater.submitList(it)
+            }
+        }
         binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
         binding.floatingActionButton.setOnClickListener {
             val action = ItemListFragmentDirections.actionItemListFragmentToAddItemFragment(
