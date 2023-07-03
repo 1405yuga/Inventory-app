@@ -53,7 +53,7 @@ class ItemListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapater = ItemListAdapter{
-
+            val action = ItemListFragmentDirections.actionItemListFragmentToItemDetailFragment(it.id)
         }
         binding.recyclerView.adapter = adapater
         viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
