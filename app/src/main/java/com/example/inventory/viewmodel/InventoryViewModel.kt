@@ -44,7 +44,8 @@ class InventoryViewModel(private val itemDao: ItemDao ) : ViewModel() {
     public fun sellItem(item : Item){
         if(item.quantityInStock>0){
             //decrease quantity by 1
-            val newItem = item.copy(quantityInStock = -1)
+            //copy function creates the same item by changing certain properties
+            val newItem = item.copy(quantityInStock = item.quantityInStock -1)
             updateItem(newItem)
         }
     }

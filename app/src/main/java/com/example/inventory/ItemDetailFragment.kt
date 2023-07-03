@@ -59,8 +59,10 @@ class ItemDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val id = navigationArgs.itemId
         viewModel.retrieveItem(id).observe(this.viewLifecycleOwner){
-            bind(it)
+            item = it
+            bind(item)
         }
+        binding.sellItem.setOnClickListener { viewModel.sellItem(item) }
     }
 
     private fun bind(item : Item){
