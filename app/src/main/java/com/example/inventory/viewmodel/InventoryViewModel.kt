@@ -41,6 +41,13 @@ class InventoryViewModel(private val itemDao: ItemDao ) : ViewModel() {
             itemDao.updateItem(item)
         }
     }
+    public fun sellItem(item : Item){
+        if(item.quantityInStock>0){
+            //decrease quantity by 1
+            val newItem = item.copy(quantityInStock = -1)
+            updateItem(newItem)
+        }
+    }
 
 
     fun isEntryValid(itemName : String,itemPrice: String ,itemCount:String) : Boolean{
