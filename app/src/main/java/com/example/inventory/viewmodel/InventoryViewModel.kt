@@ -58,6 +58,10 @@ class InventoryViewModel(private val itemDao: ItemDao ) : ViewModel() {
         return true
     }
 
+    fun isStockAvailable(item : Item) : Boolean{
+        return item.quantityInStock>0
+    }
+
 }
 
 class InventoryViewModelFactory(private val itemDao: ItemDao) : ViewModelProvider.Factory {
