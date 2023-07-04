@@ -21,6 +21,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -44,6 +45,7 @@ class AddItemFragment : Fragment() {
     // when the view hierarchy is attached to the fragment
     private var _binding: FragmentAddItemBinding? = null
     private val binding get() = _binding!!
+
     private val viewModel: InventoryViewModel by activityViewModels {
         InventoryViewModelFactory(
             (activity?.application as InventoryApplication).database
@@ -82,8 +84,28 @@ class AddItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.saveAction.setOnClickListener {
-            addItem()
+        val id = navigationArgs.itemId
+        if(id>0){
+            //edit item
+            viewModel.retrieveItem(id).observe(this.viewLifecycleOwner){
+                item = it
+                bind(item)
+            }
+        }
+        else{
+            //add Item
+            binding.saveAction.setOnClickListener {
+                addItem()
+            }
+        }
+
+    }
+    private fun bind(item : Item){
+        val price = "%.2f".format(item.itemPrice)
+        binding.apply {
+            itemName.setText(item.itemName,TextView.BufferType.SPANNABLE)
+            itemPrice.setText(price, TextView.BufferType.SPANNABLE)
+            itemCount.setText(item.quantityInStock.toString(), TextView.BufferType.SPANNABLE)
         }
     }
 
