@@ -41,8 +41,8 @@ class ItemDetailFragment : Fragment() {
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var item : Item
-    private val viewModel : InventoryViewModel by activityViewModels {
+    lateinit var item: Item
+    private val viewModel: InventoryViewModel by activityViewModels {
         InventoryViewModelFactory((activity?.application as InventoryApplication).database.itemDao())
     }
 
@@ -58,14 +58,15 @@ class ItemDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val id = navigationArgs.itemId
-        viewModel.retrieveItem(id).observe(this.viewLifecycleOwner){
+        viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) {
             item = it
             bind(item)
         }
         binding.sellItem.setOnClickListener { viewModel.sellItem(item) }
+        binding.deleteItem.setOnClickListener { showConfirmationDialog() }
     }
 
-    private fun bind(item : Item){
+    private fun bind(item: Item) {
         binding.apply {
             itemName.text = item.itemName
             itemPrice.text = item.getFormattedPrice()
@@ -74,6 +75,7 @@ class ItemDetailFragment : Fragment() {
             sellItem.setOnClickListener { viewModel.sellItem(item) }
         }
     }
+
 
     /**
      * Displays an alert dialog to get the user's confirmation before deleting the item.
@@ -94,6 +96,7 @@ class ItemDetailFragment : Fragment() {
      * Deletes the current item and navigates to the list fragment.
      */
     private fun deleteItem() {
+        viewModel.deleteItem(item)
         findNavController().navigateUp()
     }
 
